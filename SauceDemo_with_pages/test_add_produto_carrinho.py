@@ -1,23 +1,27 @@
 from selenium.webdriver.common.by import By
 import pytest
-import conftest
+from Pages.login_page import LoginPage
+from Pages.home_page import HomePage
+from Pages.carrinho_page import CarrinhoPage
 
 @pytest.mark.carrinho
 @pytest.mark.usefixtures("setup_teardown")
 class TestCT01:
     def test_ct01_add_produto_carrinho(self):
-        driver = conftest.driver
-        driver.find_element(By.ID, "user-name").send_keys("standard_user")
-        driver.find_element(By.ID, "password").send_keys('secret_sauce')
-        driver.find_element(By.ID, "login-button").click()
+        login_page = LoginPage()
+        home_page = HomePage()
+        carrinho_page = CarrinhoPage()
+        produto1 = "Sauce Labs Backpack"
+        produto2 = "Sauce Labs Bolt T-Shirt"
 
-        driver.find_element(By.XPATH, "//div[text()='Sauce Labs Backpack']").click()
+        login_page.fazer_login("standard_user", "secret_sauce")
+        home_page.adicionar_produto_ao_carrinho(produto1)
 
-        driver.find_element(By.XPATH, "//*[text()='Add to cart']").click()
+        home_page.acessar_carrinho()
+        carrinho_page.verificar_produto_carrinho_existe(produto1)
 
-        driver.find_element(By.XPATH, "//*[@class='shopping_cart_link']").click()
+        carrinho_page.continuar_compras()
+        home_page.adicionar_produto_ao_carrinho(produto2)
+        home_page.acessar_carrinho()
+        carrinho_page.verificar_produto_carrinho_existe(produto2)
 
-        driver.find_element(By.ID, "continue-shopping").click()
-        driver.find_element(By.XPATH, "//div[text()='Sauce Labs Bolt T-Shirt']").click()
-        driver.find_element(By.XPATH, "//*[text()='Add to cart']").click()
-        driver.find_element(By.XPATH, "//*[@class='shopping_cart_link']").click()

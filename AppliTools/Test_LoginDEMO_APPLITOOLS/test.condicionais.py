@@ -18,7 +18,6 @@ assert username.is_enabled()
 print(checkbox_remember_me.is_selected())
 assert not checkbox_remember_me.is_selected() 
 
-#Clicando no checkbox
 checkbox_remember_me.click()
 
 print(checkbox_remember_me.is_selected())

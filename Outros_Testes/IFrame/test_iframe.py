@@ -8,10 +8,8 @@ browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()
 browser.implicitly_wait(10)
 
 browser.maximize_window()
-#browser.get("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html")    
 
 browser.get("https://chercher.tech/practice/practice/frames")
-
 
 iframe1 = browser.find_element(By.XPATH, "//iframe[@id='frame1']")
 browser.switch_to.frame(iframe1)
